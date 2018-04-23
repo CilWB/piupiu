@@ -17,9 +17,9 @@ public class Resources {
     //Sprites
     public static final String SPR_NULL = SPR_BASE + "null_sprite.png";
     
-    public static final String SPR_PLAYER = SPR_BASE + "player.png";
-    public static final String SPR_PLAYER_LEFT = SPR_BASE + "player_l.png";
-    public static final String SPR_PLAYER_RIGHT = SPR_BASE + "player_r.png";
+    public static final String SPR_PLAYER = SPR_BASE + "playerg.png";
+    public static final String SPR_PLAYER_LEFT = SPR_BASE + "player_lg.png";
+    public static final String SPR_PLAYER_RIGHT = SPR_BASE + "player_rg.png";
     
     public static final String SPR_ENEMY_SMALL = SPR_BASE + "enemy_sm.png";
     public static final String SPR_ENEMY_LARGE = SPR_BASE + "enemy_lg.png";
