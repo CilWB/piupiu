@@ -78,6 +78,9 @@ public class GameEngine {
     ArrayList<ParticleExplosion> explosionsToRemove = new ArrayList<>();
     
     public GameEngine() {
+        
+        // อิดอกกน้ำตาลกำลังจะต้องแก้ซาวด์
+        
         //Set up the Pane and Scene
         pane = new GamePane();
         scene = new Scene(pane, Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
