@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -159,6 +160,7 @@ public class GameEngine {
                 System.err.println("Tried to move player, but player does not exist.");
             }
         });
+        
         scene.setOnKeyReleased(e -> {
             try {
                 switch (e.getCode()) {
@@ -179,6 +181,7 @@ public class GameEngine {
                 System.err.println("Tried to stop player, but player does not exist.");
             }
         });
+        
     }
     
     /**
@@ -507,11 +510,103 @@ public class GameEngine {
         
         //Bind every key to play play
         background.setOnKeyPressed(e -> {
-            pane.getChildren().removeAll(background, helpText);
-            play();
+            
+                switch(e.getCode()){
+                    case O:
+                    case UP: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
+                        System.out.println("bgm +"+bgm.getVolume());
+                    break;
+                    
+                    case L:
+                    case DOWN: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
+                        System.out.println("bgm -"+bgm.getVolume());
+                    break;
+                    
+                    
+                    case I: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
+                        System.out.println("sfxExplode +"+sfxExplode.getVolume());
+                    break;
+                    
+                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
+                        System.out.println("sfxExplode -"+sfxExplode.getVolume());
+                    break;
+                    
+                    ///////////////
+                    case RIGHT: Resources.color = (Resources.color+1)%8;
+                        System.out.println(Resources.color);
+                        Resources.changeColor();
+                        for (Entity entity1 : entities) {
+                            //remove(entity1);
+                            entity1.setImage(new Image(Resources.SPR_PLAYER, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
+                        }
+                        //entities.clear();
+                        queueRemoval(player);
+                        add(new Player());
+                        break;
+                    case LEFT: Resources.color = (Resources.color==0)?7:(Resources.color-1)%8;
+                        System.out.println(Resources.color);
+                        Resources.changeColor();
+                        for (Entity entity1 : entities) {
+                            //remove(entity1);
+                            entity1.setImage(new Image(Resources.SPR_PLAYER, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
+                        }
+                        //entities.clear();
+                        queueRemoval(player);
+                        add(new Player());
+                        break;
+                    default : pane.getChildren().removeAll(background, helpText);
+                              play();
+                              break;
+                }
+         /*
+        //change color rocket
+        switch(Resources.color){
+            case 0: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"0.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"0.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"0.png";
+                break;
+            case 1: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"1.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"1.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"1.png";
+                break;
+            case 2: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"2.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"2.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"2.png";
+                break;
+            case 3: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"3.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"3.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"3.png";
+                break;
+            case 4: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"4.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"4.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"4.png";
+                break;
+            case 5: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"5.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"5.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"5.png";
+                break;
+            case 6: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"6.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"6.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"6.png";
+                break;
+            case 7: Resources.SPR_PLAYER = Resources.SPR_BASE + "player"+"7.png";
+                    Resources.SPR_PLAYER_LEFT =  Resources.SPR_BASE + "player_l"+"7.png";
+                    Resources.SPR_PLAYER_RIGHT = Resources.SPR_BASE + "player_r"+"7.png";
+                break;
+        }
+        */
+        //System.out.println(Resources.SPR_PLAYER);  
+        
+        //entities.clear();  
+        //queueAddition(new Player());
+        ////
         });
+       
+        
+        
         background.requestFocus();
     }
+   
     
     /**
      * Stops the game and displays a game over banner.  Sets a key binding for 
