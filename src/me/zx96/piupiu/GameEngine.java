@@ -545,7 +545,7 @@ public class GameEngine {
         restartLabel.setAlignment(Pos.CENTER);
         restartLabel.setTranslateY(10);
         restartLabel.setTextAlignment(TextAlignment.CENTER);
-        restartLabel.setTextFill(Color.WHITE);
+        restartLabel.setTextFill(Color.WHITE); 
         
         //And a translucent background for the text
         Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 30, 
@@ -641,15 +641,15 @@ public class GameEngine {
                         
                         //Make a new ParticleExplosion at the Enemy's position
                         ParticleExplosion explosion = new ParticleExplosion();
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 600, 200, 2, VariableColor.GREEN);
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 500, 120, 2, VariableColor.RED);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 600, 200, 2, VariableColor.GREEN);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 500, 120, 2, VariableColor.RED);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 500, 120, 2, VariableColor.YELLOW);
                         sfxExplode.play();
 
                         //Queue the Entity for removal and play the ParticleExplosion
                         playExplosion(explosion);
                         queueRemoval(entity);
+                        System.out.println("***********************************************************************");
                     }
                     
                     //Randomly reverse large enemies
@@ -665,10 +665,8 @@ public class GameEngine {
                         
                         //Make a new ParticleExplosion at the Enemy's position
                         ParticleExplosion explosion = new ParticleExplosion();
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 600, 200, 2, VariableColor.PINK);
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 500, 450, 2, VariableColor.RED);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 600, 200, 2, VariableColor.PINK);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 500, 450, 2, VariableColor.RED);
                         sfxExplode.play();
 
                         //Play the ParticleExplosion
@@ -689,23 +687,19 @@ public class GameEngine {
                 //PlayerProjectiles colliding with Enemies
                 if (projectile instanceof PlayerProjectile) {
                     for (Enemy enemy : enemies) {
-                        if (projectile.intersects(enemy.getX(), enemy.getY(),
-                                enemy.getWidth(), enemy.getHeight())) {
+                        if (projectile.intersects(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight())) {
                             enemy.subtractHealth(projectile.getDamage());
                             queueRemoval(projectile);
                         }
                     }
                 }
                 //EnemyProjectiles colliding with the Player
-                if (projectile instanceof EnemyProjectile
-                        && projectile.intersects(player.getX(), player.getY(),
-                        player.getWidth(), player.getHeight())) {
-                    player.subtractHealth(projectile.getDamage());
+                if (projectile instanceof EnemyProjectile && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+                    //player.subtractHealth(projectile.getDamage());
                     queueRemoval(projectile);
                 }
                 //Remove any that are outside the play area
-                if (projectile.getY() < -projectile.getHeight() 
-                        || projectile.getY() > Dimensions.SCREEN_HEIGHT)
+                if (projectile.getY() < -projectile.getHeight() || projectile.getY() > Dimensions.SCREEN_HEIGHT)
                     queueRemoval(projectile);
             }
             

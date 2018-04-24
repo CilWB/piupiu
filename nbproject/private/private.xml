@@ -3,8 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/SUGAR/Documents/piupiu/src/me/zx96/piupiu/res/img/enemy_lg.png</file>
-            <file>file:/C:/Users/SUGAR/Documents/piupiu/src/me/zx96/piupiu/GameEngine.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/Player.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/GamePane.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/Dimensions.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/Timing.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/HealthBar.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/Enemy.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/effects/VariableColor.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/ScoreValues.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/Mob.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/Direction.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/Entity.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/Health.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/Resources.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/effects/ParticleExplosion.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/EnemyProjectile.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/Main.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/entity/LargeEnemy.java</file>
+            <file>file:/C:/Users/bow/Documents/piupiu/src/me/zx96/piupiu/GameEngine.java</file>
         </group>
     </open-files>
 </project-private>

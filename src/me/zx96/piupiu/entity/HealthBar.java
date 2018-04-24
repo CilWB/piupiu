@@ -25,7 +25,7 @@ public class HealthBar extends Rectangle {
         super();
         setWidth(mob.width);
         setHeight(2);
-        setFill(Color.WHITE);
+        setFill(Color.RED);
         xProperty().bind(mob.xProperty());
         yProperty().bind(mob.yProperty().subtract(2));
         widthProperty().bind(mob.healthPropertyUnmodifiable().multiply(mob.width).divide(mob.getMaxHealth()));
