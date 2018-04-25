@@ -18,10 +18,8 @@ import me.zx96.piupiu.Timing;
  */
 public class Player extends Mob {
     
-    private static Image leftSprite = new Image(Resources.SPR_PLAYER_LEFT, 
-            Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false);
-    private static Image rightSprite = new Image(Resources.SPR_PLAYER_RIGHT, 
-            Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false);
+    private static Image leftSprite = new Image(Resources.SPR_PLAYER_LEFT, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false);
+    private static Image rightSprite = new Image(Resources.SPR_PLAYER_RIGHT, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false);
     
     //The amount to move each tick
     protected double deltaX = Timing.PLAYER_DELTA_X;
@@ -153,8 +151,23 @@ public class Player extends Mob {
         doMovement();
         //Set the sprite according to how we're moving
         if (movingLeft ^ movingRight) {
-            if (movingLeft) setImage(leftSprite);
-            if (movingRight) setImage(rightSprite);
+            if (movingLeft){
+                
+                setImage(new Image(Resources.SPR_PLAYER_LEFT, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
+            }
+            if (movingRight){
+                setImage( new Image(Resources.SPR_PLAYER_RIGHT, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
+            }
         } else setImage(sprite);
     }
+    
+    /**
+     * BCN update
+     * changing of rocket color
+     */
+    public void updateColor(){
+        
+        
+    }
+    
 }

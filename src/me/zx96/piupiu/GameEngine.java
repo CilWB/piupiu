@@ -17,6 +17,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -168,6 +169,7 @@ public class GameEngine {
                 System.err.println("Tried to move player, but player does not exist.");
             }
         });
+        
         scene.setOnKeyReleased(e -> {
             try {
                 switch (e.getCode()) {
@@ -188,6 +190,7 @@ public class GameEngine {
                 System.err.println("Tried to stop player, but player does not exist.");
             }
         });
+        
     }
     
     /**
@@ -531,31 +534,49 @@ public class GameEngine {
         //Bind every key to play play 
         //Add 24 April 2018
         background.setOnKeyPressed(e -> {
-            
                 switch(e.getCode()){
                     case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
                         System.out.println("+"+bgm.getVolume()+"background");
                     break;
-                    
                     case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
                         System.out.println("-"+bgm.getVolume()+"background"); 
                     break;
-                    
                     case I: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
                         System.out.println("-"+sfxExplode.getVolume()+"effect"); 
                     break;
-
                     case K: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
                         System.out.println("+"+sfxExplode.getVolume()+"effect");
                     break;
-                    
+                    case RIGHT: Resources.color = (Resources.color+1)%8;
+                        System.out.println(Resources.color);
+                        Resources.changeColor();
+                        for (Entity entity1 : entities) {
+                            //remove(entity1);
+                            entity1.setImage(new Image(Resources.SPR_PLAYER, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
+                        }
+                        //entities.clear();
+                        queueRemoval(player);
+                        add(new Player());
+                        break;
+                    case LEFT: Resources.color = (Resources.color==0)?7:(Resources.color-1)%8;
+                        System.out.println(Resources.color);
+                        Resources.changeColor();
+                        for (Entity entity1 : entities) {
+                            //remove(entity1);
+                            entity1.setImage(new Image(Resources.SPR_PLAYER, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
+                        //entities.clear();
+                        }
+                        queueRemoval(player);
+                        add(new Player());
+                        break;
                     default : pane.getChildren().removeAll(background, helpText);
                               play();
                               break;
-                }  
+                }
         });
-        background.requestFocus(); //Press any key to continue  
+        background.requestFocus();
     }
+   
     
     /**
      * Stops the game and displays a game over banner.  Sets a key binding for 
