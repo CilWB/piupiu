@@ -481,7 +481,7 @@ public class GameEngine {
         score.set(0);
            
         setupScene(new GamePane());
-        add(new Player());
+        add(new Player()); 
         displayHelp();
     }
     
@@ -533,23 +533,19 @@ public class GameEngine {
         background.setOnKeyPressed(e -> {
             
                 switch(e.getCode()){
-                    case O:
-                    case UP: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
+                    case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
                         System.out.println("+"+bgm.getVolume()+"background");
                     break;
                     
-                    case L:
-                    case DOWN: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
+                    case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
                         System.out.println("-"+bgm.getVolume()+"background"); 
                     break;
                     
-                    case I:
-                    case LEFT: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
+                    case I: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
                         System.out.println("-"+sfxExplode.getVolume()+"effect"); 
                     break;
-                    
-                    case K:
-                    case RIGHT: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
+
+                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
                         System.out.println("+"+sfxExplode.getVolume()+"effect");
                     break;
                     
