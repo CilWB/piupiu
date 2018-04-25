@@ -113,7 +113,7 @@ public class GameEngine {
         setupTimelines();
         
         //Begin the game by showing the help
-        displayHelp();
+        displayMenu();
     }
     
     /**
@@ -487,43 +487,35 @@ public class GameEngine {
            
         setupScene(new GamePane());
         add(new Player()); 
-        displayHelp();
+        displayMenu();
     }
     
-    private void displayHelp() { //1st scene
+    private void displayMenu() { 
         pause();
         
-        Label helpText = new Label(
-            "Welcome to Piu Piu!\n\n"
+        Label menuText = new Label(
+            "\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to Piu Piu!\n\n\n"
             
-          + "In this game, you are the sole surviving member of the latest battle in this long war.\n"
-          + "You are swarmed by your alien foes, but you cannot give up hope - you must defeat as many as possible. "
-          + "You must weaken them so that humanity will have a chance at emerging victorious.\n\n"
-
-          + "Each larva you kill is worth 100 points, and each adult, 500. "
-          + "Your ship's health is shown as a bar on the top, and the aliens' healths are shown above their bodies.\n"
-          + "Hold them off, and NEVER STOP SHOOTING.\n\n"
-                    
-          + "We can win.\n\n"
-                    
-          + "...Some day...\n\n"
-          
-          + "Use the arrow keys or WASD to move.\n"
-          + "Press Space to fire a plasma ball.\n"
-          + "Press Esc to pause or end the game.\n\n"
+          + " [S] - Story\n\n"
+          + "[H] - Help\n\n"
+          + "  [O] - Option\n\n\n"
             
-          + "Press any key to continue."
+          + "Press Spacebar to continue.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+          + "<<-- Choose your ship -->>"
+                
         );
         
+        
         //Display the text
-        helpText.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
-                Dimensions.FONT_SIZE_NORMAL));
-        helpText.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
-        helpText.setMaxSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
-        helpText.setAlignment(Pos.CENTER);
-        helpText.setTextAlignment(TextAlignment.CENTER);
-        helpText.setWrapText(true);
-        helpText.setTextFill(Color.WHITE);
+        menuText.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
+                Dimensions.FONT_SIZE_NORMAL-20));
+        menuText.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        menuText.setMaxSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        menuText.setAlignment(Pos.CENTER);
+        menuText.setTextAlignment(TextAlignment.CENTER);
+        menuText.setWrapText(true);
+        menuText.setTextFill(Color.WHITE);
+        
         
         //On a shaded background
         Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 384, 
@@ -531,24 +523,24 @@ public class GameEngine {
         background.setX(0);
         background.setY((Dimensions.SCREEN_HEIGHT / 2) - 192);
         
-        pane.getChildren().addAll(background, helpText);
+        pane.getChildren().addAll(background, menuText);
         
         //Bind every key to play play 
         //Add 24 April 2018
         background.setOnKeyPressed(e -> {
                 switch(e.getCode()){
-                    case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
-                        System.out.println("+"+bgm.getVolume()+"background");
-                    break;
-                    case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
-                        System.out.println("-"+bgm.getVolume()+"background"); 
-                    break;
-                    case I: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
-                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
-                    break;
-                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
-                        System.out.println("+"+sfxExplode.getVolume()+"effect");
-                    break;
+                    case S: setupScene(new GamePane()); 
+                            displayStory();
+                            System.out.println("go to Story page");
+                            break;
+                    case H: setupScene(new GamePane()); 
+                            displayHelp();
+                            System.out.println("go to Help page");
+                            break;
+                    case O: setupScene(new GamePane()); 
+                            displayOption();
+                            System.out.println("go to Option page");
+                            break;
                     case RIGHT: Resources.color = (Resources.color+1)%8;
                         System.out.println(Resources.color);
                         Resources.changeColor();
@@ -571,14 +563,169 @@ public class GameEngine {
                         queueRemoval(player);
                         add(new Player());
                         break;
-                    default : pane.getChildren().removeAll(background, helpText);
+                    case SPACE : pane.getChildren().removeAll(background, menuText);
                               play();
                               break;
                 }
         });
         background.requestFocus();
     }
-   
+    
+    private void displayStory() { //1st scene
+        pause();
+        
+        Label helpText = new Label(
+          
+            "In this game, you are the sole surviving member of the latest battle in this long war.\n"
+          + "You are swarmed by your alien foes, but you cannot give up hope - you must defeat as many as possible. "
+          + "You must weaken them so that humanity will have a chance at emerging victorious.\n\n"
+
+          + "Each larva you kill is worth 100 points, and each adult, 500. "
+          + "Your ship's health is shown as a bar on the top, and the aliens' healths are shown above their bodies.\n"
+          + "Hold them off, and NEVER STOP SHOOTING.\n\n"
+                    
+          + "\n\n\n\n"
+            
+          + "Press B/C/N to back."
+        );
+        
+        //Display the text
+        helpText.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
+                Dimensions.FONT_SIZE_NORMAL/1.3));
+        helpText.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        helpText.setMaxSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        helpText.setAlignment(Pos.CENTER);
+        helpText.setTextAlignment(TextAlignment.CENTER);
+        helpText.setWrapText(true);
+        helpText.setTextFill(Color.WHITE);
+        
+        //On a shaded background
+        Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 384, 
+                new Color(0, 0, 0, 0.6));
+        background.setX(0);
+        background.setY((Dimensions.SCREEN_HEIGHT / 2) - 192);
+        
+        pane.getChildren().addAll(background, helpText);
+        
+        //Bind every key to play play 
+        //Add 24 April 2018
+        background.setOnKeyPressed(e -> {
+                switch(e.getCode()){
+                    case B: backMenu();
+                    break;
+                    case C: backMenu();
+                    break;
+                    case N: backMenu();
+                    break;
+                }
+        });
+        background.requestFocus();
+    }
+    
+    private void displayHelp() {
+        pause();
+        String arroww = "";
+        Label helpText = new Label(
+            "This is Help page.~\n\n\n\n"
+          
+          + "Use the arrow keys or WASD to move.\n\n"
+          + "Press Space to fire a plasma ball.\n\n"
+          + "Press Esc to pause or end the game.\n\n\n"
+            
+          + "*****IMPORTANT INFORMATION!*****\n\n\n"
+          + "each types of ENEMY have \n\na different damage.\n\n\n"
+          + "....sometime by lucky you will \n\nfound healing potion....\n\n\n\n\n"
+          + "Press B/C/N to back."
+        );
+        
+        //Display the text
+        helpText.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
+                Dimensions.FONT_SIZE_NORMAL));
+        helpText.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        helpText.setMaxSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        helpText.setAlignment(Pos.CENTER);
+        helpText.setTextAlignment(TextAlignment.CENTER);
+        helpText.setWrapText(true);
+        helpText.setTextFill(Color.WHITE);
+        
+        //On a shaded background
+        Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 384, 
+                new Color(0, 0, 0, 0.6));
+        background.setX(0);
+        background.setY((Dimensions.SCREEN_HEIGHT / 2) - 192);
+        
+        pane.getChildren().addAll(background, helpText);
+        
+        //Bind every key to play play
+        background.setOnKeyPressed(e -> {
+            
+                switch(e.getCode()){
+                    case B:
+                    case C:    
+                    case N: backMenu();
+                    break;
+                    
+                }
+            });
+        background.requestFocus();
+    }
+    
+    private void displayOption() {
+        pause();
+        Label helpText = new Label(
+            "\n\n\n~~Option~~\n\n\n\n"
+          
+          + "Use 'O' to turn up the BGM music.\n\n"
+          + "Use 'L' to turn down the BGM music.\n\n\n"
+          + "Use 'I' to turn up the SFX music.\n\n"
+          + "Use 'K' to turn down the SFX music.\n\n"
+            
+          + "\n\n\n\n\n\n\n"
+          + "Press B/C/N to back."
+        );
+        
+        //Display the text
+        helpText.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
+                Dimensions.FONT_SIZE_NORMAL));
+        helpText.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        helpText.setMaxSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        helpText.setAlignment(Pos.CENTER);
+        helpText.setTextAlignment(TextAlignment.CENTER);
+        helpText.setWrapText(true);
+        helpText.setTextFill(Color.WHITE);
+        
+        //On a shaded background
+        Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 384, 
+                new Color(0, 0, 0, 0.6));
+        background.setX(0);
+        background.setY((Dimensions.SCREEN_HEIGHT / 2) - 192);
+        
+        pane.getChildren().addAll(background, helpText);
+        
+        //Bind every key to play play
+        background.setOnKeyPressed(e -> {
+            
+                switch(e.getCode()){
+                    case B:
+                    case C:    
+                    case N: backMenu();
+                    case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
+                        System.out.println("+"+bgm.getVolume()+"background");
+                    break;
+                    case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
+                        System.out.println("-"+bgm.getVolume()+"background"); 
+                    break;
+                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
+                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
+                    break;
+                    case I: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
+                        System.out.println("+"+sfxExplode.getVolume()+"effect");
+                    break;
+                    
+                }
+            });
+        background.requestFocus();
+    }
     
     /**
      * Stops the game and displays a game over banner.  Sets a key binding for 
@@ -607,7 +754,7 @@ public class GameEngine {
         //25 April 2018
         Label restartandmenuLabel = new Label(
                 "Press R to restart\n"    
-                + "Press M to go menu");
+                + "Press B/C/N to go menu");
         restartandmenuLabel.setFont(Font.loadFont(
                 ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
                 Dimensions.FONT_SIZE_SMALL));
@@ -630,8 +777,9 @@ public class GameEngine {
             switch (e.getCode()) {
                 case R:
                     restart(); break;
-                case M:
-                    backMenu(); break;
+                case B:
+                case C:    
+                case N: backMenu();
 
                 case ESCAPE:
                     Platform.exit(); break;
@@ -661,7 +809,8 @@ public class GameEngine {
         goLabel.setTextFill(Color.WHITE);
         
         //Add "Press Space to resume"
-        Label resumeLabel = new Label("Press Space to resume");
+        Label resumeLabel = new Label("Press Space to resume\n"   
+                + "Press B/C/N to go menu");
         resumeLabel.setFont(Font.loadFont(
                 ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
                 Dimensions.FONT_SIZE_SMALL));
@@ -685,6 +834,9 @@ public class GameEngine {
                 case SPACE:
                     pane.getChildren().removeAll(background, goLabel, resumeLabel);
                     play(); break;
+                case B:
+                case C:    
+                case N: backMenu();
                 case ESCAPE:
                     Platform.exit(); break;
             }
@@ -767,7 +919,7 @@ public class GameEngine {
                     else if (((Mob)entity).getHealth() <= 100 && ((Mob)entity).getHealth() > 65) {
                         //((Player) entity).getHealthBar().setFill(RED);
                         this.getPane().getHealthBar().setFill(GREEN);
-                        System.out.println("change color health to GREEN");
+                        System.out.println("change color health to GREENujjik");
                     }
                 }
                 
