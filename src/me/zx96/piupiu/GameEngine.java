@@ -762,7 +762,12 @@ public class GameEngine {
                     else if (((Mob)entity).getHealth() <= 65 && ((Mob)entity).getHealth() > 35) {
                         //((Player) entity).getHealthBar().setFill(RED);
                         this.getPane().getHealthBar().setFill(YELLOW);
-                        System.out.println("change color health to RED");
+                        System.out.println("change color health to YELLOW");
+                    }
+                    else if (((Mob)entity).getHealth() <= 100 && ((Mob)entity).getHealth() > 65) {
+                        //((Player) entity).getHealthBar().setFill(RED);
+                        this.getPane().getHealthBar().setFill(GREEN);
+                        System.out.println("change color health to GREEN");
                     }
                 }
                 
@@ -776,6 +781,7 @@ public class GameEngine {
             
             //Detect collisions and remove any Projectiles that went outside the GamePane
             for (Projectile projectile : projectiles) {
+                
                 //PlayerProjectiles colliding with Enemies
                 if (projectile instanceof PlayerProjectile) {
                     for (Enemy enemy : enemies) {
@@ -790,14 +796,14 @@ public class GameEngine {
                     //decrease player's health
                     player.subtractHealth(projectile.getDamage());
                     queueRemoval(projectile);
+                    shoot.stop();
+                    shoot.play(); 
                 }//Heart colliding with the Player
                 if (projectile instanceof Heart && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
                     //decrease player's health
                     player.addHealth(projectile.getDamage());
                     queueRemoval(projectile);
                     queueRemoval(projectile);  
-                    shoot.stop();
-                    shoot.play(); 
                 }
                 //Remove any that are outside the play area
                 if (projectile.getY() < -projectile.getHeight() || projectile.getY() > Dimensions.SCREEN_HEIGHT)
