@@ -59,7 +59,7 @@ public class GamePane extends Pane {
         highScoreLabel.setTranslateY(Dimensions.HEALTH_BAR_SIZE + 2);
         
         //player healthBar
-        healthBar = new Rectangle(Dimensions.SCREEN_WIDTH, Dimensions.HEALTH_BAR_SIZE); //Color.RED
+        healthBar = new Rectangle(Dimensions.SCREEN_WIDTH, Dimensions.HEALTH_BAR_SIZE, Color.GREEN); 
         healthBar.setX(0);
         healthBar.setY(0);
         
@@ -103,16 +103,7 @@ public class GamePane extends Pane {
     
     // healthBar Color
     public void bindHealth(ReadOnlyIntegerProperty health) {
-        healthBar.widthProperty().bind(health.multiply(Dimensions.SCREEN_WIDTH).divide(Health.PLAYER));
-        if (Health.PLAYER > 0 && Health.PLAYER <= 35){
-            healthBar.setFill(RED);
-        }
-        else if (Health.PLAYER > 35 && Health.PLAYER <= 65){
-            healthBar.setFill(YELLOW);
-        }
-        else if (Health.PLAYER > 65 && Health.PLAYER <= 100){
-            healthBar.setFill(GREEN);
-        }  
+        healthBar.widthProperty().bind(health.multiply(Dimensions.SCREEN_WIDTH).divide(Health.PLAYER)); 
     }
     
     /**
@@ -136,4 +127,18 @@ public class GamePane extends Pane {
     public void setEngine(GameEngine engine) {
         this.engine = engine;
     }
+
+    public Label getScoreLabel() {
+        return scoreLabel;
+    }
+
+    public Label getHighScoreLabel() {
+        return highScoreLabel;
+    }
+
+    public Rectangle getHealthBar() {
+        return healthBar;
+    }
+    
+    
 }

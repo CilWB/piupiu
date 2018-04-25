@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.*;    
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -30,6 +31,7 @@ import me.zx96.piupiu.entity.Direction;
 import me.zx96.piupiu.entity.Enemy;
 import me.zx96.piupiu.entity.EnemyProjectile;
 import me.zx96.piupiu.entity.Entity;
+import me.zx96.piupiu.entity.HealthBar;
 import me.zx96.piupiu.entity.LargeEnemy;
 import me.zx96.piupiu.entity.Mob;
 import me.zx96.piupiu.entity.Player;
@@ -477,7 +479,6 @@ public class GameEngine {
         setupScene(new GamePane());
         queueAddition(new Player());
         displayHelp();
-        
     }
     
     private void displayHelp() { //1st scene
@@ -725,6 +726,19 @@ public class GameEngine {
                         queueRemoval(entity);                
                     }
                 }
+                if (entity instanceof Player) {
+                    if (((Mob)entity).getHealth() <= 35) {
+                        //((Player) entity).getHealthBar().setFill(RED);
+                        this.getPane().getHealthBar().setFill(RED);
+                        System.out.println("change color health to RED");
+                    }
+                    else if (((Mob)entity).getHealth() <= 65 && ((Mob)entity).getHealth() > 35) {
+                        //((Player) entity).getHealthBar().setFill(RED);
+                        this.getPane().getHealthBar().setFill(YELLOW);
+                        System.out.println("change color health to RED");
+                    }
+                }
+                
             }
             
             //Randomly spawn a new enemy
