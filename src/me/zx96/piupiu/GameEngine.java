@@ -113,7 +113,7 @@ public class GameEngine {
         setupTimelines();
         
         //Begin the game by showing the help
-        displayHelp();
+        displayStory();
     }
     
     /**
@@ -487,16 +487,15 @@ public class GameEngine {
            
         setupScene(new GamePane());
         add(new Player()); 
-        displayHelp();
+        displayStory();
     }
     
-    private void displayHelp() { //1st scene
+    private void displayStory() { //1st scene
         pause();
         
         Label helpText = new Label(
-            "Welcome to Piu Piu!\n\n"
-            
-          + "In this game, you are the sole surviving member of the latest battle in this long war.\n"
+          
+            "In this game, you are the sole surviving member of the latest battle in this long war.\n"
           + "You are swarmed by your alien foes, but you cannot give up hope - you must defeat as many as possible. "
           + "You must weaken them so that humanity will have a chance at emerging victorious.\n\n"
 
@@ -504,15 +503,9 @@ public class GameEngine {
           + "Your ship's health is shown as a bar on the top, and the aliens' healths are shown above their bodies.\n"
           + "Hold them off, and NEVER STOP SHOOTING.\n\n"
                     
-          + "We can win.\n\n"
-                    
-          + "...Some day...\n\n"
-          
-          + "Use the arrow keys or WASD to move.\n"
-          + "Press Space to fire a plasma ball.\n"
-          + "Press Esc to pause or end the game.\n\n"
+          + "\n\n\n\n"
             
-          + "Press any key to continue."
+          + "Press B/C/N to back."
         );
         
         //Display the text
@@ -537,43 +530,12 @@ public class GameEngine {
         //Add 24 April 2018
         background.setOnKeyPressed(e -> {
                 switch(e.getCode()){
-                    case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
-                        System.out.println("+"+bgm.getVolume()+"background");
+                    case B: backMenu();
                     break;
-                    case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
-                        System.out.println("-"+bgm.getVolume()+"background"); 
+                    case C: backMenu();
                     break;
-                    case I: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
-                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
+                    case N: backMenu();
                     break;
-                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
-                        System.out.println("+"+sfxExplode.getVolume()+"effect");
-                    break;
-                    case RIGHT: Resources.color = (Resources.color+1)%8;
-                        System.out.println(Resources.color);
-                        Resources.changeColor();
-                        for (Entity entity1 : entities) {
-                            //remove(entity1);
-                            entity1.setImage(new Image(Resources.SPR_PLAYER, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
-                        }
-                        //entities.clear();
-                        queueRemoval(player);
-                        add(new Player());
-                        break;
-                    case LEFT: Resources.color = (Resources.color==0)?7:(Resources.color-1)%8;
-                        System.out.println(Resources.color);
-                        Resources.changeColor();
-                        for (Entity entity1 : entities) {
-                            //remove(entity1);
-                            entity1.setImage(new Image(Resources.SPR_PLAYER, Dimensions.PLAYER_WIDTH, Dimensions.PLAYER_HEIGHT, false, false));
-                        //entities.clear();
-                        }
-                        queueRemoval(player);
-                        add(new Player());
-                        break;
-                    default : pane.getChildren().removeAll(background, helpText);
-                              play();
-                              break;
                 }
         });
         background.requestFocus();
