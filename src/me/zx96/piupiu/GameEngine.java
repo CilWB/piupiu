@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.*;    
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -30,6 +31,7 @@ import me.zx96.piupiu.entity.Direction;
 import me.zx96.piupiu.entity.Enemy;
 import me.zx96.piupiu.entity.EnemyProjectile;
 import me.zx96.piupiu.entity.Entity;
+import me.zx96.piupiu.entity.HealthBar;
 import me.zx96.piupiu.entity.LargeEnemy;
 import me.zx96.piupiu.entity.Mob;
 import me.zx96.piupiu.entity.Player;
@@ -64,6 +66,8 @@ public class GameEngine {
             new Media(ClassLoader.getSystemResource(Resources.AUD_BGM).toExternalForm()));
     private MediaPlayer sfxExplode = new MediaPlayer(
             new Media(ClassLoader.getSystemResource(Resources.AUD_SFX_EXPLOSION).toExternalForm()));
+    private MediaPlayer shoot = new MediaPlayer(
+            new Media(ClassLoader.getSystemResource(Resources.AUD_SHOOT).toExternalForm()));
     
     //Entities
     private Player player = new Player();
@@ -78,6 +82,9 @@ public class GameEngine {
     ArrayList<ParticleExplosion> explosionsToRemove = new ArrayList<>();
     
     public GameEngine() {
+        
+        // อิดอกกน้ำตาลกำลังจะต้องแก้ซาวด์
+        
         //Set up the Pane and Scene
         pane = new GamePane();
         scene = new Scene(pane, Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
@@ -94,6 +101,8 @@ public class GameEngine {
         sfxExplode.setOnEndOfMedia(() -> sfxExplode.stop());
         //And keep it from being so freaking loud
         sfxExplode.setVolume(0.3);
+        
+        shoot.setVolume(0.3);
         
         //Play the BGM and start up the Timelines
         bgm.setCycleCount(MediaPlayer.INDEFINITE);
@@ -436,7 +445,7 @@ public class GameEngine {
      * PreCondition: The game is stopped.
      * PostCondition: The game has been restarted in a clean state.
      */
-    private void restart() {
+    private void restart() { 
         //Clear out the ArrayLists
         entities.clear();
         entitiesToAdd.clear();
@@ -455,14 +464,28 @@ public class GameEngine {
         //Restart the timelines and BGM
         play();
     }
-    
+
     /**
      * Pauses the game and displays information about the game in the 
      * GamePane.
      * PreCondition: None.
      * PostCondition: Help is displayed and the game will play on any key.
      */
-    private void displayHelp() {
+    
+    private void backMenu() {
+        entities.clear();
+        entitiesToAdd.clear();
+        entitiesToRemove.clear();
+        projectiles.clear();
+        enemies.clear();
+        score.set(0);
+           
+        setupScene(new GamePane());
+        add(new Player());
+        displayHelp();
+    }
+    
+    private void displayHelp() { //1st scene
         pause();
         
         Label helpText = new Label(
@@ -505,12 +528,37 @@ public class GameEngine {
         
         pane.getChildren().addAll(background, helpText);
         
-        //Bind every key to play play
+        //Bind every key to play play 
+        //Add 24 April 2018
         background.setOnKeyPressed(e -> {
-            pane.getChildren().removeAll(background, helpText);
-            play();
+            
+                switch(e.getCode()){
+                    case O:
+                    case UP: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
+                        System.out.println("+"+bgm.getVolume()+"background");
+                    break;
+                    
+                    case L:
+                    case DOWN: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
+                        System.out.println("-"+bgm.getVolume()+"background"); 
+                    break;
+                    
+                    case I:
+                    case LEFT: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
+                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
+                    break;
+                    
+                    case K:
+                    case RIGHT: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
+                        System.out.println("+"+sfxExplode.getVolume()+"effect");
+                    break;
+                    
+                    default : pane.getChildren().removeAll(background, helpText);
+                              play();
+                              break;
+                }  
         });
-        background.requestFocus();
+        background.requestFocus(); //Press any key to continue  
     }
     
     /**
@@ -536,16 +584,19 @@ public class GameEngine {
         goLabel.setTextAlignment(TextAlignment.CENTER);
         goLabel.setTextFill(Color.WHITE);
         
-        //Add "Press R to restart"
-        Label restartLabel = new Label("Press R to restart");
-        restartLabel.setFont(Font.loadFont(
+        //Add "Press R to restart" n "Press M to go Menu"
+        //25 April 2018
+        Label restartandmenuLabel = new Label(
+                "Press R to restart\n"    
+                + "Press M to go menu");
+        restartandmenuLabel.setFont(Font.loadFont(
                 ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
                 Dimensions.FONT_SIZE_SMALL));
-        restartLabel.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
-        restartLabel.setAlignment(Pos.CENTER);
-        restartLabel.setTranslateY(10);
-        restartLabel.setTextAlignment(TextAlignment.CENTER);
-        restartLabel.setTextFill(Color.WHITE);
+        restartandmenuLabel.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        restartandmenuLabel.setAlignment(Pos.CENTER);
+        restartandmenuLabel.setTranslateY(20);
+        restartandmenuLabel.setTextAlignment(TextAlignment.CENTER);
+        restartandmenuLabel.setTextFill(Color.WHITE);
         
         //And a translucent background for the text
         Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 30, 
@@ -554,12 +605,15 @@ public class GameEngine {
         background.setY((Dimensions.SCREEN_HEIGHT / 2) - 12);
         
         //Display the background and labels
-        pane.getChildren().addAll(background, goLabel, restartLabel);
+        pane.getChildren().addAll(background, goLabel, restartandmenuLabel);
         //Bind R to restart
         background.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case R:
                     restart(); break;
+                case M:
+                    backMenu(); break;
+
                 case ESCAPE:
                     Platform.exit(); break;
             }
@@ -652,7 +706,7 @@ public class GameEngine {
                         queueRemoval(entity);
                     }
                     
-                    //Randomly reverse large enemies
+                    //Randomly reverse large enemies nn Large enemies died
                     if (entity instanceof LargeEnemy) {
                         if (Math.random() < Timing.ENEMY_LARGE_REVERSE_CHANCE)
                             ((LargeEnemy)entity).reverseDirection();
@@ -673,9 +727,22 @@ public class GameEngine {
 
                         //Play the ParticleExplosion
                         playExplosion(explosion);
-                        queueRemoval(entity);
+                        queueRemoval(entity);                
                     }
                 }
+                if (entity instanceof Player) {
+                    if (((Mob)entity).getHealth() <= 35) {
+                        //((Player) entity).getHealthBar().setFill(RED);
+                        this.getPane().getHealthBar().setFill(RED);
+                        System.out.println("change color health to RED");
+                    }
+                    else if (((Mob)entity).getHealth() <= 65 && ((Mob)entity).getHealth() > 35) {
+                        //((Player) entity).getHealthBar().setFill(RED);
+                        this.getPane().getHealthBar().setFill(YELLOW);
+                        System.out.println("change color health to RED");
+                    }
+                }
+                
             }
             
             //Randomly spawn a new enemy
@@ -701,7 +768,9 @@ public class GameEngine {
                         && projectile.intersects(player.getX(), player.getY(),
                         player.getWidth(), player.getHeight())) {
                     player.subtractHealth(projectile.getDamage());
-                    queueRemoval(projectile);
+                    queueRemoval(projectile);  
+                    shoot.stop();
+                    shoot.play(); 
                 }
                 //Remove any that are outside the play area
                 if (projectile.getY() < -projectile.getHeight() 

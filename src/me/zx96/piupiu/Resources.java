@@ -28,9 +28,12 @@ public class Resources {
     public static final String SPR_PROJECTILE_ENEMY_SMALL = SPR_BASE + "projectile_enemy_sm.png";
     public static final String SPR_PROJECTILE_ENEMY_LARGE = SPR_BASE + "projectile_enemy_lg.png";
     
+    public static final String SPR_HEART = SPR_BASE + "heart.png";
+    
     //Audio
     public static final String AUD_BGM = AUD_BASE + "bgm.mp3";
     public static final String AUD_SFX_EXPLOSION = AUD_BASE + "explode.mp3";
+    public static final String AUD_SHOOT = AUD_BASE + "shoot.mp3";
     
     //Font
     public static final String FONT = BASE + "PressStart2P.ttf";
