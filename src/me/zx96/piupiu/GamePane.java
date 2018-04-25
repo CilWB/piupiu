@@ -141,4 +141,8 @@ public class GamePane extends Pane {
     }
     
     
+    public void setHealthBar(Rectangle healthBar) {
+        this.healthBar = healthBar;
+    }
+    
 }

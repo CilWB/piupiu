@@ -32,4 +32,6 @@ public class Dimensions {
     public static final double PROJECTILE_ENEMY_SMALL_HEIGHT = 6;
     public static final double PROJECTILE_ENEMY_LARGE_WIDTH = 6;
     public static final double PROJECTILE_ENEMY_LARGE_HEIGHT = 14;
+    public static final double PROJECTILE_ITEM_HEART_WIDTH = 20;
+    public static final double PROJECTILE_ITEM_HEART_HEIGHT = 20;
 }

@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -32,6 +33,7 @@ import me.zx96.piupiu.entity.Direction;
 import me.zx96.piupiu.entity.Enemy;
 import me.zx96.piupiu.entity.EnemyProjectile;
 import me.zx96.piupiu.entity.Entity;
+import me.zx96.piupiu.entity.Heart;
 import me.zx96.piupiu.entity.HealthBar;
 import me.zx96.piupiu.entity.LargeEnemy;
 import me.zx96.piupiu.entity.Mob;
@@ -712,15 +714,21 @@ public class GameEngine {
                         
                         //Make a new ParticleExplosion at the Enemy's position
                         ParticleExplosion explosion = new ParticleExplosion();
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 600, 200, 2, VariableColor.GREEN);
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 500, 120, 2, VariableColor.RED);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 600, 200, 2, VariableColor.GREEN);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 500, 120, 2, VariableColor.RED);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 500, 120, 2, VariableColor.YELLOW);
                         sfxExplode.play();
 
                         //Queue the Entity for removal and play the ParticleExplosion
                         playExplosion(explosion);
                         queueRemoval(entity);
+                        System.out.println("***********************************************************************");
+                        
+                        //add(new Heart(entity.getCenterX(),entity.getCenterY()));
+                        if(entity instanceof LargeEnemy){
+                            this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
+                        }
+                            
                     }
                     
                     //Randomly reverse large enemies nn Large enemies died
@@ -736,10 +744,8 @@ public class GameEngine {
                         
                         //Make a new ParticleExplosion at the Enemy's position
                         ParticleExplosion explosion = new ParticleExplosion();
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 600, 200, 2, VariableColor.PINK);
-                        explosion.generateParticles(entity.getCenterX(), 
-                            entity.getCenterY(), 120, 500, 450, 2, VariableColor.RED);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 600, 200, 2, VariableColor.PINK);
+                        explosion.generateParticles(entity.getCenterX(),entity.getCenterY(), 120, 500, 450, 2, VariableColor.RED);
                         sfxExplode.play();
 
                         //Play the ParticleExplosion
@@ -773,25 +779,28 @@ public class GameEngine {
                 //PlayerProjectiles colliding with Enemies
                 if (projectile instanceof PlayerProjectile) {
                     for (Enemy enemy : enemies) {
-                        if (projectile.intersects(enemy.getX(), enemy.getY(),
-                                enemy.getWidth(), enemy.getHeight())) {
+                        if (projectile.intersects(enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight())) {
                             enemy.subtractHealth(projectile.getDamage());
                             queueRemoval(projectile);
                         }
                     }
                 }
                 //EnemyProjectiles colliding with the Player
-                if (projectile instanceof EnemyProjectile
-                        && projectile.intersects(player.getX(), player.getY(),
-                        player.getWidth(), player.getHeight())) {
+                if (projectile instanceof EnemyProjectile && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+                    //decrease player's health
                     player.subtractHealth(projectile.getDamage());
+                    queueRemoval(projectile);
+                }//Heart colliding with the Player
+                if (projectile instanceof Heart && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+                    //decrease player's health
+                    player.addHealth(projectile.getDamage());
+                    queueRemoval(projectile);
                     queueRemoval(projectile);  
                     shoot.stop();
                     shoot.play(); 
                 }
                 //Remove any that are outside the play area
-                if (projectile.getY() < -projectile.getHeight() 
-                        || projectile.getY() > Dimensions.SCREEN_HEIGHT)
+                if (projectile.getY() < -projectile.getHeight() || projectile.getY() > Dimensions.SCREEN_HEIGHT)
                     queueRemoval(projectile);
             }
             

@@ -19,4 +19,7 @@ public class Health {
     public static final int PROJECTILE_PLAYER_DMG = 20;
     public static final int PROJECTILE_ENEMY_SMALL_DMG = 10;
     public static final int PROJECTILE_ENEMY_LARGE_DMG = 25;
+    
+    //Heal point
+    public static final int PROJECTILE_ITEM_HEART_HEAL = 40; 
 }

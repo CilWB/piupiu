@@ -6,6 +6,7 @@ package me.zx96.piupiu.entity;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import me.zx96.piupiu.Health;
 
 /*
  * Jonathan Zentgraf
@@ -127,7 +128,8 @@ public abstract class Mob extends Entity {
      * @param health The amount of health to add.
      */
     public void addHealth(int health) {
-        healthProperty.set(healthProperty.get() - health);
+        //healthProperty.set(healthProperty.get() + health);
+        healthProperty.set((healthProperty.get() + health <= 100)?healthProperty.get() + health:Health.PLAYER);
     }
     
     /**

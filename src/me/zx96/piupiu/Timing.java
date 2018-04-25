@@ -23,6 +23,8 @@ public class Timing {
     public static final double PROJECTILE_ENEMY_LARGE_DELTA_X = 0.0;
     public static final double PROJECTILE_ENEMY_LARGE_DELTA_Y = -3.0;
     public static final double PROJECTILE_ENEMY_SMALL_DELTA = 1.0;
+    public static final double PROJECTILE_ITEM_HEART_DELTA_Y = 1.5;
+    public static final double PROJECTILE_ITEM_HEART_DELTA_X = 0.0;
     
     //Adjust frequency of enemy actions
     public static final double ENEMY_LARGE_REVERSE_CHANCE = 0.01;
