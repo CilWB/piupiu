@@ -33,6 +33,7 @@ public class Resources {
     //Audio
     public static final String AUD_BGM = AUD_BASE + "bgm.mp3";
     public static final String AUD_SFX_EXPLOSION = AUD_BASE + "explode.mp3";
+    public static final String AUD_SHOOT = AUD_BASE + "shoot.mp3";
     
     //Font
     public static final String FONT = BASE + "PressStart2P.ttf";

@@ -66,6 +66,8 @@ public class GameEngine {
             new Media(ClassLoader.getSystemResource(Resources.AUD_BGM).toExternalForm()));
     private MediaPlayer sfxExplode = new MediaPlayer(
             new Media(ClassLoader.getSystemResource(Resources.AUD_SFX_EXPLOSION).toExternalForm()));
+    private MediaPlayer shoot = new MediaPlayer(
+            new Media(ClassLoader.getSystemResource(Resources.AUD_SHOOT).toExternalForm()));
     
     //Entities
     private Player player = new Player();
@@ -99,6 +101,8 @@ public class GameEngine {
         sfxExplode.setOnEndOfMedia(() -> sfxExplode.stop());
         //And keep it from being so freaking loud
         sfxExplode.setVolume(0.3);
+        
+        shoot.setVolume(0.3);
         
         //Play the BGM and start up the Timelines
         bgm.setCycleCount(MediaPlayer.INDEFINITE);
@@ -475,9 +479,9 @@ public class GameEngine {
         projectiles.clear();
         enemies.clear();
         score.set(0);
-        
+           
         setupScene(new GamePane());
-        queueAddition(new Player());
+        add(new Player());
         displayHelp();
     }
     
@@ -764,7 +768,9 @@ public class GameEngine {
                         && projectile.intersects(player.getX(), player.getY(),
                         player.getWidth(), player.getHeight())) {
                     player.subtractHealth(projectile.getDamage());
-                    queueRemoval(projectile);
+                    queueRemoval(projectile);  
+                    shoot.stop();
+                    shoot.play(); 
                 }
                 //Remove any that are outside the play area
                 if (projectile.getY() < -projectile.getHeight() 
