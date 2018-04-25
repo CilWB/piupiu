@@ -465,6 +465,21 @@ public class GameEngine {
      * PreCondition: None.
      * PostCondition: Help is displayed and the game will play on any key.
      */
+    
+    private void backMenu() {
+        entities.clear();
+        entitiesToAdd.clear();
+        entitiesToRemove.clear();
+        projectiles.clear();
+        enemies.clear();
+        score.set(0);
+        
+        setupScene(new GamePane());
+        queueAddition(new Player());
+        displayHelp();
+        
+    }
+    
     private void displayHelp() { //1st scene
         pause();
         
@@ -564,16 +579,19 @@ public class GameEngine {
         goLabel.setTextAlignment(TextAlignment.CENTER);
         goLabel.setTextFill(Color.WHITE);
         
-        //Add "Press R to restart"
-        Label restartLabel = new Label("Press R to restart");
-        restartLabel.setFont(Font.loadFont(
+        //Add "Press R to restart" n "Press M to go Menu"
+        //25 April 2018
+        Label restartandmenuLabel = new Label(
+                "Press R to restart\n"    
+                + "Press M to go menu");
+        restartandmenuLabel.setFont(Font.loadFont(
                 ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
                 Dimensions.FONT_SIZE_SMALL));
-        restartLabel.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
-        restartLabel.setAlignment(Pos.CENTER);
-        restartLabel.setTranslateY(10);
-        restartLabel.setTextAlignment(TextAlignment.CENTER);
-        restartLabel.setTextFill(Color.WHITE);
+        restartandmenuLabel.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
+        restartandmenuLabel.setAlignment(Pos.CENTER);
+        restartandmenuLabel.setTranslateY(20);
+        restartandmenuLabel.setTextAlignment(TextAlignment.CENTER);
+        restartandmenuLabel.setTextFill(Color.WHITE);
         
         //And a translucent background for the text
         Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 30, 
@@ -582,12 +600,15 @@ public class GameEngine {
         background.setY((Dimensions.SCREEN_HEIGHT / 2) - 12);
         
         //Display the background and labels
-        pane.getChildren().addAll(background, goLabel, restartLabel);
+        pane.getChildren().addAll(background, goLabel, restartandmenuLabel);
         //Bind R to restart
         background.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case R:
                     restart(); break;
+                case M:
+                    backMenu(); break;
+
                 case ESCAPE:
                     Platform.exit(); break;
             }
@@ -680,7 +701,7 @@ public class GameEngine {
                         queueRemoval(entity);
                     }
                     
-                    //Randomly reverse large enemies
+                    //Randomly reverse large enemies nn Large enemies died
                     if (entity instanceof LargeEnemy) {
                         if (Math.random() < Timing.ENEMY_LARGE_REVERSE_CHANCE)
                             ((LargeEnemy)entity).reverseDirection();
@@ -701,7 +722,7 @@ public class GameEngine {
 
                         //Play the ParticleExplosion
                         playExplosion(explosion);
-                        queueRemoval(entity);
+                        queueRemoval(entity);                
                     }
                 }
             }
