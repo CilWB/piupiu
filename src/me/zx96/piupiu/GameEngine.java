@@ -439,7 +439,7 @@ public class GameEngine {
      * PreCondition: The game is stopped.
      * PostCondition: The game has been restarted in a clean state.
      */
-    private void restart() {
+    private void restart() { 
         //Clear out the ArrayLists
         entities.clear();
         entitiesToAdd.clear();
@@ -458,14 +458,14 @@ public class GameEngine {
         //Restart the timelines and BGM
         play();
     }
-    
+
     /**
      * Pauses the game and displays information about the game in the 
      * GamePane.
      * PreCondition: None.
      * PostCondition: Help is displayed and the game will play on any key.
      */
-    private void displayHelp() {
+    private void displayHelp() { //1st scene
         pause();
         
         Label helpText = new Label(
@@ -508,12 +508,37 @@ public class GameEngine {
         
         pane.getChildren().addAll(background, helpText);
         
-        //Bind every key to play play
+        //Bind every key to play play 
+        //Add 24 April 2018
         background.setOnKeyPressed(e -> {
-            pane.getChildren().removeAll(background, helpText);
-            play();
+            
+                switch(e.getCode()){
+                    case O:
+                    case UP: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
+                        System.out.println("+"+bgm.getVolume()+"background");
+                    break;
+                    
+                    case L:
+                    case DOWN: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
+                        System.out.println("-"+bgm.getVolume()+"background"); 
+                    break;
+                    
+                    case I:
+                    case LEFT: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
+                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
+                    break;
+                    
+                    case K:
+                    case RIGHT: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
+                        System.out.println("+"+sfxExplode.getVolume()+"effect");
+                    break;
+                    
+                    default : pane.getChildren().removeAll(background, helpText);
+                              play();
+                              break;
+                }  
         });
-        background.requestFocus();
+        background.requestFocus(); //Press any key to continue  
     }
     
     /**
