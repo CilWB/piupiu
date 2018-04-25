@@ -11,6 +11,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.ORANGE;
+import static javafx.scene.paint.Color.RED;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -53,7 +55,8 @@ public class GamePane extends Pane {
         highScoreLabel.setTextFill(Color.WHITE);
         highScoreLabel.setTranslateY(Dimensions.HEALTH_BAR_SIZE + 2);
         
-        healthBar = new Rectangle(Dimensions.SCREEN_WIDTH, Dimensions.HEALTH_BAR_SIZE, Color.WHITE);
+        //healthBar of player
+        healthBar = new Rectangle(Dimensions.SCREEN_WIDTH, Dimensions.HEALTH_BAR_SIZE, Color.GREEN);
         healthBar.setX(0);
         healthBar.setY(0);
         
@@ -117,4 +120,13 @@ public class GamePane extends Pane {
     public void setEngine(GameEngine engine) {
         this.engine = engine;
     }
+
+    public Rectangle getHealthBar() {
+        return healthBar;
+    }
+
+    public void setHealthBar(Rectangle healthBar) {
+        this.healthBar = healthBar;
+    }
+    
 }

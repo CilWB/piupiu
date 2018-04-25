@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -30,6 +31,7 @@ import me.zx96.piupiu.entity.Direction;
 import me.zx96.piupiu.entity.Enemy;
 import me.zx96.piupiu.entity.EnemyProjectile;
 import me.zx96.piupiu.entity.Entity;
+import me.zx96.piupiu.entity.Heart;
 import me.zx96.piupiu.entity.LargeEnemy;
 import me.zx96.piupiu.entity.Mob;
 import me.zx96.piupiu.entity.Player;
@@ -650,6 +652,12 @@ public class GameEngine {
                         playExplosion(explosion);
                         queueRemoval(entity);
                         System.out.println("***********************************************************************");
+                        
+                        //add(new Heart(entity.getCenterX(),entity.getCenterY()));
+                        if(entity instanceof LargeEnemy){
+                            this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
+                        }
+                            
                     }
                     
                     //Randomly reverse large enemies
@@ -695,7 +703,13 @@ public class GameEngine {
                 }
                 //EnemyProjectiles colliding with the Player
                 if (projectile instanceof EnemyProjectile && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
-                    //player.subtractHealth(projectile.getDamage());
+                    //decrease player's health
+                    player.subtractHealth(projectile.getDamage());
+                    queueRemoval(projectile);
+                }//Heart colliding with the Player
+                if (projectile instanceof Heart && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+                    //decrease player's health
+                    player.addHealth(projectile.getDamage());
                     queueRemoval(projectile);
                 }
                 //Remove any that are outside the play area
