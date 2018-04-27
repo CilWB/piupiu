@@ -29,6 +29,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import me.zx96.piupiu.effects.ParticleExplosion;
 import me.zx96.piupiu.effects.VariableColor;
+import me.zx96.piupiu.entity.Diamond;
 import me.zx96.piupiu.entity.Direction;
 import me.zx96.piupiu.entity.Enemy;
 import me.zx96.piupiu.entity.EnemyProjectile;
@@ -611,10 +612,8 @@ public class GameEngine {
         //Add 24 April 2018
         background.setOnKeyPressed(e -> {
                 switch(e.getCode()){
-                    case B: backMenu();
-                    break;
-                    case C: backMenu();
-                    break;
+                    case B: 
+                    case C: 
                     case N: backMenu();
                     break;
                 }
@@ -876,7 +875,14 @@ public class GameEngine {
                         
                         //add(new Heart(entity.getCenterX(),entity.getCenterY()));
                         if(entity instanceof LargeEnemy){
+                            
                             this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
+                           
+                            if (Math.random() < Timing.DIAMOND_SPAWN_CHANCE) {
+                                if (Math.random() < Timing.DIAMOND_PROPORTION) //
+                                    this.queueAddition(new Diamond(entity.getCenterX(),entity.getCenterY()));
+                                //else queueAddition(new LargeEnemy());
+            }
                         }
                             
                     }
@@ -948,16 +954,26 @@ public class GameEngine {
                     queueRemoval(projectile);
                     shoot.stop();
                     shoot.play(); 
-                }//Heart colliding with the Player
+                }
+                //Heart colliding with the Player
                 if (projectile instanceof Heart && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
                     //decrease player's health
                     player.addHealth(projectile.getDamage());
                     queueRemoval(projectile);
-                    queueRemoval(projectile);  
+                    //queueRemoval(projectile);  
+                }
+                //Diamond colliding with the Player
+                if (projectile instanceof Diamond && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+                    for (Enemy enemy : enemies) {
+                            enemy.subtractHealth(projectile.getDamage());
+                        } 
+                    queueRemoval(projectile);
+                    
                 }
                 //Remove any that are outside the play area
                 if (projectile.getY() < -projectile.getHeight() || projectile.getY() > Dimensions.SCREEN_HEIGHT)
                     queueRemoval(projectile);
+    
             }
             
             //Remove Entities queued for removal

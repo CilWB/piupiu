@@ -26,13 +26,23 @@ public class Timing {
     public static final double PROJECTILE_ITEM_HEART_DELTA_Y = 1.5;
     public static final double PROJECTILE_ITEM_HEART_DELTA_X = 0.0;
     
+    public static final double PROJECTILE_ITEM_DIAMOND_DELTA_Y = 2.0;
+    public static final double PROJECTILE_ITEM_DIAMOND_DELTA_X = 0.0;
+    
     //Adjust frequency of enemy actions
     public static final double ENEMY_LARGE_REVERSE_CHANCE = 0.01;
     public static final double ENEMY_SPAWN_CHANCE = 0.005;
+    
+    //Adjust freauency of items actions
+    public static final double HEART_SPAWN_CHANCE = 0.25;
+    public static final double DIAMOND_SPAWN_CHANCE = 0.25;
+    public static final double DIAMOND_PROPORTION = 1;
+    
     //Relative percentages of each enemy (0-1)
     public static final double SMALL_ENEMY_PROPORTION = 0.7;
     public static final double LARGE_ENEMY_PROPORTION = 0.7;
     
     public static final int ENEMY_SMALL_FIRE_RATE = 400;
     public static final int ENEMY_LARGE_FIRE_RATE = 600;
+
 }
