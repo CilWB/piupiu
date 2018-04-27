@@ -711,6 +711,7 @@ public class GameEngine {
                     case N: backMenu();
                     case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
                         System.out.println("+"+bgm.getVolume()+"background");
+                    
                     break;
                     case K: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
                         System.out.println("-"+sfxExplode.getVolume()+"effect"); 
@@ -776,7 +777,7 @@ public class GameEngine {
                     restart(); break;
                 case B:
                 case C:    
-                case N: backMenu();
+                case N: backMenu(); break;
 
                 case ESCAPE:
                     Platform.exit(); break;
@@ -806,7 +807,7 @@ public class GameEngine {
         goLabel.setTextFill(Color.WHITE);
         
         //Add "Press Space to resume"
-        Label resumeLabel = new Label("Press Space to resume\n"   
+        Label resumeLabel = new Label("\nPress Space to resume\n"   
                 + "Press B/C/N to go menu");
         resumeLabel.setFont(Font.loadFont(
                 ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
@@ -833,7 +834,7 @@ public class GameEngine {
                     play(); break;
                 case B:
                 case C:    
-                case N: backMenu();
+                case N: backMenu(); break;
                 case ESCAPE:
                     Platform.exit(); break;
             }
