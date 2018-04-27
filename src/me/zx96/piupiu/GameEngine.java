@@ -712,8 +712,7 @@ public class GameEngine {
                     case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
                         System.out.println("+"+bgm.getVolume()+"background");
                     break;
-                    case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
-                        System.out.println("-"+bgm.getVolume()+"background"); 
+                    case C: backMenu();
                     break;
                     case K: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
                         System.out.println("-"+sfxExplode.getVolume()+"effect"); 
