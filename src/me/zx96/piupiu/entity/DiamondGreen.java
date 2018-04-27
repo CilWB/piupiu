@@ -14,11 +14,11 @@ import me.zx96.piupiu.Timing;
  *
  * @author SUGAR
  */
-public class Diamond extends Item {
+public class DiamondGreen extends Item {
     
-    public Diamond(double originX, double originY) {
-    super(Resources.SPR_ITEM_DIAMOND, Dimensions.PROJECTILE_ITEM_DIAMOND_WIDTH, 
-            Dimensions.PROJECTILE_ITEM_DIAMOND_HEIGHT, Health.PROJECTILE_ITEM_DIAMOND_HEAL,
+    public DiamondGreen(double originX, double originY) {
+    super(Resources.SPR_ITEM_DIAMONDGREEN, Dimensions.PROJECTILE_ITEM_DIAMOND_WIDTH, 
+            Dimensions.PROJECTILE_ITEM_DIAMOND_HEIGHT, Health.PROJECTILE_ITEM_DIAMONDGREEN_DMG,
             originX, originY, Timing.PROJECTILE_ITEM_DIAMOND_DELTA_X,
             Timing.PROJECTILE_ITEM_DIAMOND_DELTA_Y);
         }

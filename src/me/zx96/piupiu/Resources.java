@@ -31,7 +31,8 @@ public class Resources {
     public static final String SPR_PROJECTILE_ENEMY_LARGE = SPR_BASE + "projectile_enemy_lg.png";
     
     public static final String SPR_ITEM_HEART = SPR_BASE + "heart.png";
-    public static final String SPR_ITEM_DIAMOND = SPR_BASE + "diamond.png";
+    public static final String SPR_ITEM_DIAMONDBLUE = SPR_BASE + "diamondBlue.png";
+    public static final String SPR_ITEM_DIAMONDGREEN = SPR_BASE + "diamondGreen.png";
     
     //Audio
     public static final String AUD_BGM = AUD_BASE + "bgm.mp3";

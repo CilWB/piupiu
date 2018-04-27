@@ -29,7 +29,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import me.zx96.piupiu.effects.ParticleExplosion;
 import me.zx96.piupiu.effects.VariableColor;
-import me.zx96.piupiu.entity.Diamond;
+import me.zx96.piupiu.entity.DiamondBlue;
+import me.zx96.piupiu.entity.DiamondGreen;
 import me.zx96.piupiu.entity.Direction;
 import me.zx96.piupiu.entity.Enemy;
 import me.zx96.piupiu.entity.EnemyProjectile;
@@ -42,15 +43,12 @@ import me.zx96.piupiu.entity.Player;
 import me.zx96.piupiu.entity.PlayerProjectile;
 import me.zx96.piupiu.entity.Projectile;
 import me.zx96.piupiu.entity.SmallEnemy;
-// numtan is HEREEEEE
 /*
  * Jonathan Zentgraf
  * Michael Ondrasek
  * CS-1180-01 Lab 10
  * Matthew Flaute
  */
-//hello from cil
-//I am bowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
 public class GameEngine {
     
     private GamePane pane;
@@ -86,9 +84,6 @@ public class GameEngine {
     ArrayList<ParticleExplosion> explosionsToRemove = new ArrayList<>();
     
     public GameEngine() {
-        
-        // อิดอกกน้ำตาลกำลังจะต้องแก้ซาวด์
-        
         //Set up the Pane and Scene
         pane = new GamePane();
         scene = new Scene(pane, Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
@@ -103,9 +98,9 @@ public class GameEngine {
         
         //Set the explosion sound effect to reset after playing
         sfxExplode.setOnEndOfMedia(() -> sfxExplode.stop());
+        
         //And keep it from being so freaking loud
         sfxExplode.setVolume(0.3);
-        
         shoot.setVolume(0.3);
         
         //Play the BGM and start up the Timelines
@@ -116,7 +111,6 @@ public class GameEngine {
         //Begin the game by showing the help
         displayMenu();
     }
-    
     /**
      * Configures the GamePane for use and sets the Scene to display it.
      * PreCondition: None.
@@ -131,7 +125,6 @@ public class GameEngine {
         pane.setEngine(this);
         
         scene.setRoot(pane);
-        
         /* Uncomment me to get a button
         javafx.scene.control.Button button = new javafx.scene.control.Button("Fire!");
         button.setOnAction(e -> player.fireProjectile());
@@ -193,7 +186,6 @@ public class GameEngine {
                 System.err.println("Tried to stop player, but player does not exist.");
             }
         });
-        
     }
     
     /**
@@ -493,7 +485,6 @@ public class GameEngine {
     
     private void displayMenu() { 
         pause();
-        
         Label menuText = new Label(
             "\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome to Piu Piu!\n\n\n"
             
@@ -503,9 +494,7 @@ public class GameEngine {
             
           + "Press Spacebar to continue.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
           + "<<-- Choose your ship -->>"
-                
         );
-        
         
         //Display the text
         menuText.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
@@ -517,31 +506,17 @@ public class GameEngine {
         menuText.setWrapText(true);
         menuText.setTextFill(Color.WHITE);
         
-        
         //On a shaded background
         Rectangle background = new Rectangle(Dimensions.SCREEN_WIDTH, 384, 
                 new Color(0, 0, 0, 0.6));
         background.setX(0);
         background.setY((Dimensions.SCREEN_HEIGHT / 2) - 192);
-        
         pane.getChildren().addAll(background, menuText);
         
         //Bind every key to play play 
         //Add 24 April 2018
         background.setOnKeyPressed(e -> {
                 switch(e.getCode()){
-                    case S: setupScene(new GamePane()); 
-                            displayStory();
-                            System.out.println("go to Story page");
-                            break;
-                    case H: setupScene(new GamePane()); 
-                            displayHelp();
-                            System.out.println("go to Help page");
-                            break;
-                    case O: setupScene(new GamePane()); 
-                            displayOption();
-                            System.out.println("go to Option page");
-                            break;
                     case RIGHT: Resources.color = (Resources.color+1)%8;
                         System.out.println(Resources.color);
                         Resources.changeColor();
@@ -564,9 +539,17 @@ public class GameEngine {
                         queueRemoval(player);
                         add(new Player());
                         break;
+                    case S: displayStory(); 
+                        break;
+                    case O: displayOption(); 
+                        break;
+                    case H: displayHelp(); 
+                        break;
                     case SPACE : pane.getChildren().removeAll(background, menuText);
                               play();
                               break;
+                    case ESCAPE:
+                        Platform.exit(); break;
                 }
         });
         background.requestFocus();
@@ -574,11 +557,11 @@ public class GameEngine {
     
     private void displayStory() { //1st scene
         pause();
-        
+        setupScene(new GamePane());
         Label helpText = new Label(
-          
-            "In this game, you are the sole surviving member of the latest battle in this long war.\n"
-          + "You are swarmed by your alien foes, but you cannot give up hope - you must defeat as many as possible. "
+            "Piu Piu\n\n\n"
+          + "In this game, you are the sole surviving member of the latest battle in this long war.\n"
+          + "You are swarmed by your alien foes, but you cannot give up hope - you must defeat as many as possible."
           + "You must weaken them so that humanity will have a chance at emerging victorious.\n\n"
 
           + "Each larva you kill is worth 100 points, and each adult, 500. "
@@ -586,13 +569,12 @@ public class GameEngine {
           + "Hold them off, and NEVER STOP SHOOTING.\n\n"
                     
           + "\n\n\n\n"
-            
           + "Press B/C/N to back."
         );
         
         //Display the text
         helpText.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
-                Dimensions.FONT_SIZE_NORMAL/1.3));
+                Dimensions.FONT_SIZE_NORMAL));
         helpText.setMinSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
         helpText.setMaxSize(Dimensions.SCREEN_WIDTH, Dimensions.SCREEN_HEIGHT);
         helpText.setAlignment(Pos.CENTER);
@@ -609,13 +591,14 @@ public class GameEngine {
         pane.getChildren().addAll(background, helpText);
         
         //Bind every key to play play 
-        //Add 24 April 2018
         background.setOnKeyPressed(e -> {
                 switch(e.getCode()){
                     case B: 
                     case C: 
                     case N: backMenu();
                     break;
+                    case ESCAPE:
+                        Platform.exit(); break;
                 }
         });
         background.requestFocus();
@@ -623,7 +606,8 @@ public class GameEngine {
     
     private void displayHelp() {
         pause();
-        String arroww = "";
+        
+        setupScene(new GamePane());
         Label helpText = new Label(
             "This is Help page.~\n\n\n\n"
           
@@ -663,7 +647,8 @@ public class GameEngine {
                     case C:    
                     case N: backMenu();
                     break;
-                    
+                    case ESCAPE:
+                        Platform.exit(); break;
                 }
             });
         background.requestFocus();
@@ -671,6 +656,8 @@ public class GameEngine {
     
     private void displayOption() {
         pause();
+        
+        setupScene(new GamePane());
         Label helpText = new Label(
             "\n\n\n~~Option~~\n\n\n\n"
           
@@ -708,28 +695,33 @@ public class GameEngine {
                     case B:
                     case C:    
                     case N: backMenu();
+                    
+                    //Setting Sound
                     case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
                         System.out.println("+"+bgm.getVolume()+"background");
-                    
-                    break;
-                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
-                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
-                    break;
+                        break;
+                    case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
+                        System.out.println("-"+bgm.getVolume()+"background");
+                        break;
                     case I: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
+                        shoot.setVolume( (shoot.getVolume()+0.01<=1)?shoot.getVolume()+0.01:shoot.getVolume()); 
                         System.out.println("+"+sfxExplode.getVolume()+"effect");
-                    break;
-                    
+                        break;
+                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
+                        shoot.setVolume( (shoot.getVolume()-0.01>=0)?shoot.getVolume()-0.01:shoot.getVolume()); 
+                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
+                        break;
+                    case ESCAPE:
+                        Platform.exit(); break;
                 }
             });
         background.requestFocus();
     }
+//     * Stops the game and displays a game over banner.  Sets a key binding for 
+//     * R to restart the game.
+//     * PreCondition: The game is running.
+//     * PostCondition: The game is stopped and a banner is displayed.
     
-    /**
-     * Stops the game and displays a game over banner.  Sets a key binding for 
-     * R to restart the game.
-     * PreCondition: The game is running.
-     * PostCondition: The game is stopped and a banner is displayed.
-     */
     private void gameOver() {
         //Stop all looping events
         stop();
@@ -748,7 +740,6 @@ public class GameEngine {
         goLabel.setTextFill(Color.WHITE);
         
         //Add "Press R to restart" n "Press M to go Menu"
-        //25 April 2018
         Label restartandmenuLabel = new Label(
                 "Press R to restart\n"    
                 + "Press B/C/N to go menu");
@@ -785,16 +776,14 @@ public class GameEngine {
         background.requestFocus();
     }
     
-    /**
-     * Stops the game and displays a game over banner.  Sets a key binding for 
-     * R to restart the game.
-     * PreCondition: The game is running.
-     * PostCondition: The game is stopped and a banner is displayed.
-     */
+//     * Stops the game and displays a game over banner.  Sets a key binding for 
+//     * R to restart the game.
+//     * PreCondition: The game is running.
+//     * PostCondition: The game is stopped and a banner is displayed.
+    
     private void displayPaused() {
         //Pauses all looping events
         pause();
-        
         //Display "PAUSED" in the center over a translucent bar
         Label goLabel = new Label("PAUSED");
         goLabel.setFont(Font.loadFont(ClassLoader.getSystemResource(Resources.FONT).toExternalForm(), 
@@ -841,12 +830,11 @@ public class GameEngine {
         background.requestFocus();
     }
     
-    /**
-     * Sets up the game logic within Timelines and plays them.
-     * PreCondition: Player is not null.
-     * PostCondition: The game logic has been set up and the loops have been 
-     * started.
-     */
+//     * Sets up the game logic within Timelines and plays them.
+//     * PreCondition: Player is not null.
+//     * PostCondition: The game logic has been set up and the loops have been 
+//     * started.
+
     private void setupTimelines() {
         
         gameLoop = new Timeline(new KeyFrame(Duration.millis(Timing.TICK_LENGTH), e -> {
@@ -871,20 +859,23 @@ public class GameEngine {
                         //Queue the Entity for removal and play the ParticleExplosion
                         playExplosion(explosion);
                         queueRemoval(entity);
-                        System.out.println("***********************************************************************");
                         
                         //add(new Heart(entity.getCenterX(),entity.getCenterY()));
                         if(entity instanceof LargeEnemy){
-                            
-                            this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
-                           
-                            if (Math.random() < Timing.DIAMOND_SPAWN_CHANCE) {
-                                if (Math.random() < Timing.DIAMOND_PROPORTION) //
-                                    this.queueAddition(new Diamond(entity.getCenterX(),entity.getCenterY()));
-                                //else queueAddition(new LargeEnemy());
-            }
-                        }
-                            
+                            double rand1 = Math.random();
+                            System.out.println(rand1);
+                            if (rand1 < Timing.DIAMOND_SPAWN_CHANCE) { 
+                                double rand2 = Math.random();
+                                System.out.println(rand2);
+                                if (rand2 < Timing.DIAMONDBLUE_PROPORTION ){ 
+                                    this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
+                                }
+                                else if(rand2 < Timing.DIAMONDGREEN_PROPORTION){
+                                    this.queueAddition(new DiamondGreen(entity.getCenterX(),entity.getCenterY()));
+                                }
+                                else this.queueAddition(new DiamondBlue(entity.getCenterX(),entity.getCenterY()));
+                            }
+                        }      
                     }
                     
                     //Randomly reverse large enemies nn Large enemies died
@@ -911,22 +902,18 @@ public class GameEngine {
                 }
                 if (entity instanceof Player) {
                     if (((Mob)entity).getHealth() <= 35) {
-                        //((Player) entity).getHealthBar().setFill(RED);
                         this.getPane().getHealthBar().setFill(RED);
-                        System.out.println("change color health to RED");
+                        //System.out.println("change color health to RED");
                     }
                     else if (((Mob)entity).getHealth() <= 65 && ((Mob)entity).getHealth() > 35) {
-                        //((Player) entity).getHealthBar().setFill(RED);
                         this.getPane().getHealthBar().setFill(YELLOW);
-                        System.out.println("change color health to YELLOW");
+                        //System.out.println("change color health to YELLOW");
                     }
                     else if (((Mob)entity).getHealth() <= 100 && ((Mob)entity).getHealth() > 65) {
-                        //((Player) entity).getHealthBar().setFill(RED);
                         this.getPane().getHealthBar().setFill(GREEN);
-                        System.out.println("change color health to GREENujjik");
+                        //System.out.println("change color health to GREEN");
                     }
                 }
-                
             }
             
             //Randomly spawn a new enemy
@@ -960,15 +947,20 @@ public class GameEngine {
                     //decrease player's health
                     player.addHealth(projectile.getDamage());
                     queueRemoval(projectile);
-                    //queueRemoval(projectile);  
                 }
-                //Diamond colliding with the Player
-                if (projectile instanceof Diamond && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+                //DiamondBlue colliding with the Player
+                if (projectile instanceof DiamondBlue && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
                     for (Enemy enemy : enemies) {
                             enemy.subtractHealth(projectile.getDamage());
                         } 
                     queueRemoval(projectile);
-                    
+                }
+                //DiamondGreen colliding with the Player
+                if (projectile instanceof DiamondGreen && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+                    for (Projectile projectilee : projectiles) {
+                            queueRemoval(projectilee);
+                        } 
+                    //queueRemoval(projectile);
                 }
                 //Remove any that are outside the play area
                 if (projectile.getY() < -projectile.getHeight() || projectile.getY() > Dimensions.SCREEN_HEIGHT)
@@ -1017,5 +1009,4 @@ public class GameEngine {
         largeEnemyFireLoop.setCycleCount(Timeline.INDEFINITE);
         largeEnemyFireLoop.play();
     }
-    
 }

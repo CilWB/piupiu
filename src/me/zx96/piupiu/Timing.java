@@ -34,9 +34,9 @@ public class Timing {
     public static final double ENEMY_SPAWN_CHANCE = 0.005;
     
     //Adjust freauency of items actions
-    public static final double HEART_SPAWN_CHANCE = 0.25;
-    public static final double DIAMOND_SPAWN_CHANCE = 0.25;
-    public static final double DIAMOND_PROPORTION = 1;
+    public static final double DIAMOND_SPAWN_CHANCE = 0.4;
+    public static final double DIAMONDBLUE_PROPORTION = 0.7;
+    public static final double DIAMONDGREEN_PROPORTION = 0.2;
     
     //Relative percentages of each enemy (0-1)
     public static final double SMALL_ENEMY_PROPORTION = 0.7;

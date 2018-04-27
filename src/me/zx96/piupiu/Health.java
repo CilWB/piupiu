@@ -22,5 +22,6 @@ public class Health {
     
     //Heal point
     public static final int PROJECTILE_ITEM_HEART_HEAL = 30; 
-    public static final int PROJECTILE_ITEM_DIAMOND_HEAL = 200;
+    public static final int PROJECTILE_ITEM_DIAMONDBLUE_DMG = 200;
+    public static final int PROJECTILE_ITEM_DIAMONDGREEN_DMG = 0;
 }
