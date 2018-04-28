@@ -54,6 +54,9 @@ public class GameEngine {
     private GamePane pane;
     private Scene scene;
     
+    
+    private boolean bcn = false;
+    
     //Timelines to fire events at regular intervals
     private Timeline gameLoop;
     private Timeline smallEnemyFireLoop;
@@ -144,6 +147,15 @@ public class GameEngine {
         scene.setOnKeyPressed(e -> {
             try {
                 switch (e.getCode()) {
+                    
+                    case G:
+                        if(bcn)
+                                bcn = false;
+                        else
+                                bcn = true;
+                        System.out.println("God mode= "+bcn);
+                        break;
+                    
                     case LEFT:
                     case A:
                         player.startMovement(Direction.LEFT); break;
@@ -160,6 +172,24 @@ public class GameEngine {
                         player.fireProjectile(); break;
                     case ESCAPE:
                         displayPaused(); break;
+                
+                    //Setting Sound
+                    case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
+                        System.out.println("+"+bgm.getVolume()+"background");
+                        break;
+                    case L: bgm.setVolume( (bgm.getVolume()-0.01>=0)?bgm.getVolume()-0.01:bgm.getVolume()); 
+                        System.out.println("-"+bgm.getVolume()+"background");
+                        break;
+                    case I: sfxExplode.setVolume( (sfxExplode.getVolume()+0.01<=1)?sfxExplode.getVolume()+0.01:sfxExplode.getVolume()); 
+                        shoot.setVolume( (shoot.getVolume()+0.01<=1)?shoot.getVolume()+0.01:shoot.getVolume()); 
+                        System.out.println("+"+sfxExplode.getVolume()+"effect");
+                        break;
+                    case K: sfxExplode.setVolume( (sfxExplode.getVolume()-0.01>=0)?sfxExplode.getVolume()-0.01:sfxExplode.getVolume()); 
+                        shoot.setVolume( (shoot.getVolume()-0.01>=0)?shoot.getVolume()-0.01:shoot.getVolume()); 
+                        System.out.println("-"+sfxExplode.getVolume()+"effect"); 
+                        break;
+//                    case ESCAPE:
+//                        Platform.exit(); break;    
                 }
             } catch (NullPointerException ex) {
                 System.err.println("Tried to move player, but player does not exist.");
@@ -936,8 +966,9 @@ public class GameEngine {
                 }
                 //EnemyProjectiles colliding with the Player
                 if (projectile instanceof EnemyProjectile && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
-                    //decrease player's health
-                    player.subtractHealth(projectile.getDamage());
+                    //decrease player's health'
+                    if(bcn==false)
+                     player.subtractHealth(projectile.getDamage());
                     queueRemoval(projectile);
                     shoot.stop();
                     shoot.play(); 
