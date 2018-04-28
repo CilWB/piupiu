@@ -889,22 +889,20 @@ public class GameEngine {
                         //Queue the Entity for removal and play the ParticleExplosion
                         playExplosion(explosion);
                         queueRemoval(entity);
-                        
+                        if(entity instanceof SmallEnemy) 
+                            this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
+                            
                         //add(new Heart(entity.getCenterX(),entity.getCenterY()));
                         if(entity instanceof LargeEnemy){
-                            double rand1 = Math.random();
-                            System.out.println(rand1);
-                            if (rand1 < Timing.DIAMOND_SPAWN_CHANCE) { 
                                 double rand2 = Math.random();
                                 System.out.println(rand2);
                                 if (rand2 < Timing.DIAMONDBLUE_PROPORTION ){ 
-                                    this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
+                                   this.queueAddition(new DiamondBlue(entity.getCenterX(),entity.getCenterY()));
                                 }
-                                else if(rand2 < Timing.DIAMONDGREEN_PROPORTION){
-                                    this.queueAddition(new DiamondGreen(entity.getCenterX(),entity.getCenterY()));
+                                else //if(rand2 < Timing.DIAMONDGREEN_PROPORTION)
+                                {
+                                   this.queueAddition(new DiamondGreen(entity.getCenterX(),entity.getCenterY()));
                                 }
-                                else this.queueAddition(new DiamondBlue(entity.getCenterX(),entity.getCenterY()));
-                            }
                         }      
                     }
                     
@@ -944,6 +942,9 @@ public class GameEngine {
                         //System.out.println("change color health to GREEN");
                     }
                 }
+                for (Entity entity1 : entitiesToRemove) {
+                remove(entity1);
+            }
             }
             
             //Randomly spawn a new enemy
