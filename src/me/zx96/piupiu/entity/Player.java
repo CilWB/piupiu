@@ -165,6 +165,7 @@ public class Player extends Mob {
      * BCN update
      * changing of rocket color
      */
+/**** implemented for 60/2 OOP ****/
     public void updateColor(){
         
         

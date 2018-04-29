@@ -17,10 +17,8 @@ public class VariableColor {
     public static final VariableColor RED = new VariableColor(0, 0, 0.6, 1.0, 0.3, 0.9);
     public static final VariableColor GREEN = new VariableColor(130, 130, 0.6, 1.0, 0.3, 1.0);
     public static final VariableColor PINK = new VariableColor(5, 5, 0.6, 0.7, 0.3, 1.0);
-    
+/**** implemented for 60/2 OOP ****/
     public static final VariableColor YELLOW = new VariableColor(60, 60, 0.9, 1.0, 0.3, 0.5);
-    //public static final VariableColor PINK = new VariableColor(5, 5, 0.6, 0.7, 0.3, 1.0);
-    //public static final VariableColor PINK = new VariableColor(5, 5, 0.6, 0.7, 0.3, 1.0);
     
     
     

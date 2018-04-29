@@ -172,7 +172,7 @@ public class GameEngine {
                         player.fireProjectile(); break;
                     case ESCAPE:
                         displayPaused(); break;
-                
+/**** implemented for 60/2 OOP ****/
                     //Setting Sound
                     case O: bgm.setVolume( (bgm.getVolume()+0.01<=1)?bgm.getVolume()+0.01:bgm.getVolume()); 
                         System.out.println("+"+bgm.getVolume()+"background");
@@ -499,7 +499,7 @@ public class GameEngine {
      * PreCondition: None.
      * PostCondition: Help is displayed and the game will play on any key.
      */
-    
+/**** implemented for 60/2 OOP ****/    
     private void backMenu() {
         entities.clear();
         entitiesToAdd.clear();
@@ -512,7 +512,7 @@ public class GameEngine {
         add(new Player()); 
         displayMenu();
     }
-    
+ /**** implemented for 60/2 OOP ****/   
     private void displayMenu() { 
         pause();
         Label menuText = new Label(
@@ -584,7 +584,7 @@ public class GameEngine {
         });
         background.requestFocus();
     }
-    
+/**** implemented for 60/2 OOP ****/    
     private void displayStory() { //1st scene
         pause();
         setupScene(new GamePane());
@@ -633,7 +633,7 @@ public class GameEngine {
         });
         background.requestFocus();
     }
-    
+ /**** implemented for 60/2 OOP ****/   
     private void displayHelp() {
         pause();
         
@@ -683,7 +683,7 @@ public class GameEngine {
             });
         background.requestFocus();
     }
-    
+ /**** implemented for 60/2 OOP ****/   
     private void displayOption() {
         pause();
         
@@ -795,6 +795,7 @@ public class GameEngine {
             switch (e.getCode()) {
                 case R:
                     restart(); break;
+/**** implemented for 60/2 OOP ****/
                 case B:
                 case C:    
                 case N: backMenu(); break;
@@ -850,6 +851,7 @@ public class GameEngine {
                 case SPACE:
                     pane.getChildren().removeAll(background, goLabel, resumeLabel);
                     play(); break;
+/**** implemented for 60/2 OOP ****/
                 case B:
                 case C:    
                 case N: backMenu(); break;
@@ -889,6 +891,7 @@ public class GameEngine {
                         //Queue the Entity for removal and play the ParticleExplosion
                         playExplosion(explosion);
                         queueRemoval(entity);
+/**** implemented for 60/2 OOP ****/
                         if(entity instanceof SmallEnemy) 
                             this.queueAddition(new Heart(entity.getCenterX(),entity.getCenterY()));
                             
@@ -928,6 +931,7 @@ public class GameEngine {
                         queueRemoval(entity);                
                     }
                 }
+/**** implemented for 60/2 OOP ****/
                 if (entity instanceof Player) {
                     if (((Mob)entity).getHealth() <= 35) {
                         this.getPane().getHealthBar().setFill(RED);
@@ -967,6 +971,7 @@ public class GameEngine {
                 }
                 //EnemyProjectiles colliding with the Player
                 if (projectile instanceof EnemyProjectile && projectile.intersects(player.getX(), player.getY(), player.getWidth(), player.getHeight())) {
+/**** implemented for 60/2 OOP ****/
                     //decrease player's health'
                     if(bcn==false)
                      player.subtractHealth(projectile.getDamage());
@@ -994,6 +999,7 @@ public class GameEngine {
                         } 
                     //queueRemoval(projectile);
                 }
+                
                 //Remove any that are outside the play area
                 if (projectile.getY() < -projectile.getHeight() || projectile.getY() > Dimensions.SCREEN_HEIGHT)
                     queueRemoval(projectile);

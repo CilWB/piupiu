@@ -45,7 +45,7 @@ public class Resources {
     //Not actually in the res package, but this is a good file to put this in
     public static final String HIGH_SCORE_FILE = "highscore.txt";
     
-    //
+ /**** implemented for 60/2 OOP ****/
     public static int color = 0;
     
     

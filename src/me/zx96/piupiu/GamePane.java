@@ -11,14 +11,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import static javafx.scene.paint.Color.GREEN;
-import static javafx.scene.paint.Color.RED;
-import static javafx.scene.paint.Color.WHITE;
-import static javafx.scene.paint.Color.YELLOW;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import me.zx96.piupiu.entity.LargeEnemyProjectile;
 
 /*
  * Jonathan Zentgraf
@@ -127,7 +122,7 @@ public class GamePane extends Pane {
     public void setEngine(GameEngine engine) {
         this.engine = engine;
     }
-
+/**** implemented for 60/2 OOP ****/
     public Label getScoreLabel() {
         return scoreLabel;
     }
